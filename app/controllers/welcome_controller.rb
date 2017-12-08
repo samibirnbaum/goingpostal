@@ -4,4 +4,7 @@ class WelcomeController < ApplicationController
 
   def about   #automatically renders this view (default rendering)
   end
+
+  def contact   #automatically renders this view (default rendering)
+  end
 end
