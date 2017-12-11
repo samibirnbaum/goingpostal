@@ -13,3 +13,11 @@
  *= require_tree .
  *= require_self
  */
+
+
+
+
+
+/*behind the scenes all the bootstrap css code is in here, so i can use in the application.html*/
+ @import "bootstrap-sprockets";
+ @import "bootstrap";
