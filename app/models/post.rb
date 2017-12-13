@@ -1,5 +1,5 @@
-class Post < ApplicationRecord #ApplicationRecord inherits from ActiveRecord::Base, which defines a number of helpful methods for interaction with database.
+class Post < ApplicationRecord #ApplicationRecord inherits from ActiveRecord::Base, which defines a number of helpful methods for interaction with database an ORM library.
     #@title
     #@body
-    has_many :comments #ARMethod-allows post object to have many comment onbjects related to it + creates some cool methods for us, like (attr_accessor :attribute) dynamically creates getter and setter methods
+    has_many :comments #provides a comments method for every instance of Post which is a getter/setter for comments associated with the post
 end
