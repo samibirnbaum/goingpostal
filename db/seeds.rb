@@ -16,6 +16,9 @@ posts = Post.all #retrieves every post object from the db and stores it in varia
     )
 end
 
+unique_post = Post.find_or_create_by!(title: "the indempotent post", body: "no matter how many times this code runs the first run and only that run happens")
+Comment.find_or_create_by!(post: unique_post, body: "an idempotent comment for the indepotent post")
+
 puts "Seed finished"
 puts "#{Post.count} posts created"
 puts "#{Comment.count} comments created"
