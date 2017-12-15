@@ -1,9 +1,10 @@
 Rails.application.routes.draw do
-  get 'welcome/index'
+  
+  resources :posts #creates routes from the url to the posts controller
 
-  get 'welcome/about'
+  get 'about' => 'welcome#about' #url of about should route to about method in welcome controller
 
-  root 'welcome#index'
+  root 'welcome#index' #using root url go to index method in welcome controller
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
