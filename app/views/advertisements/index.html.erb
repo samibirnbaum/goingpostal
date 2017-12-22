@@ -1,0 +1,6 @@
+<h1>Home Page for Advertisements</h1>
+<h2>All Advertisements</h2>
+
+<%@ads.each do |ad|%>
+    <p class="lead"><%= link_to(ad.title, advertisement_path(ad.id))%></p>
+<%end%>

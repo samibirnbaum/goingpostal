@@ -1,0 +1,14 @@
+<h1>Create a new advert</h1>
+
+<%=form_for @advert do |f|%>
+    <%=f.label(:title)%>
+    <%=f.text_field(:title)%> 
+
+    <%=f.label(:copy)%>
+    <%=f.text_area(:copy)%>
+
+    <%=f.label(:price)%>
+    <%=f.number_field(:price)%>
+
+    <%=f.submit("Save")%>
+<%end%>
