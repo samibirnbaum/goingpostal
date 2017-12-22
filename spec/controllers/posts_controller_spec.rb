@@ -62,12 +62,39 @@ RSpec.describe PostsController, type: :controller do
     end
   end
 
-  # describe "GET #edit" do
-  #   it "returns http success" do
-  #     get :edit
-  #     expect(response).to have_http_status(:success)
-  #   end
-  # end
+
+
+  describe "GET #edit" do
+    it "returns http success" do
+      get :edit, params: {id: my_post.id}
+      expect(response).to have_http_status(:success)
+    end
+
+    it "renders the edit view" do
+      get :edit, params: {id: my_post.id}
+      expect(response).to render_template(:edit)
+    end
+
+    it "assigns correct post for editing to the post variable" do
+      get :edit, params: {id: my_post.id}
+      expect(assigns(:post)).to eq(Post.find(my_post.id))
+    end
+  end
+
+  describe "PUT #update" do
+    it "updates @post variable with new attributes" do
+      put :update, params: {id: my_post.id, post: {title: "updated title", body: "updated body"}}
+      expect(assigns(:post).id).to eq(my_post.id)
+      expect(assigns(:post).title).to eq("updated title")
+      expect(assigns(:post).body).to eq("updated body")
+    end
+
+    it "shows the updated post in the #show view" do
+      put :update, params: {id: my_post.id, post: {title: "updated title", body: "updated body"}}
+      expect(response).to redirect_to(post_path(my_post.id))
+    end
+  end
+
 
 
 #####NOTE: IN RSPEC LOST OF PASSING OF VAR'S AND METHODS INTO RSPEC METHODS - USING SYMBOLS TO DO THIS####
