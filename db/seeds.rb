@@ -16,6 +16,15 @@ posts = Post.all #retrieves every post object from the db and stores it in varia
     )
 end
 
+50.times do
+    Question.create!(
+        title: RandomData.random_sentence,
+        body: RandomData.random_paragraph,
+        resolved: false
+    )
+end
+
 puts "Seed finished"
 puts "#{Post.count} posts created"
 puts "#{Comment.count} comments created"
+puts "#{Question.count} questions created"
