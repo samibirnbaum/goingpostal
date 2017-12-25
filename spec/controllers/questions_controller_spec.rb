@@ -7,6 +7,18 @@ RSpec.describe QuestionsController, type: :controller do
       get :index
       expect(response).to have_http_status(:success)
     end
+
+    it "renders #index view" do
+      get :index
+      expect(response).to render_template(:index)
+    end
+
+    it "assigns all the questions to @questions" do
+      Question.create!(title: "question title", body: "question body", resolved: false)
+      Question.create!(title: "question title2", body: "question body2", resolved: false)
+      get :index
+      expect(assigns(:questions)).to eq(Question.all)
+    end
   end
 
   describe "GET #show" do
@@ -40,7 +52,7 @@ RSpec.describe QuestionsController, type: :controller do
 
 
 
-  
+
   # describe "GET #create" do
   #   it "returns http success" do
   #     get :create
