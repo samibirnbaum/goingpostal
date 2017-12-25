@@ -1,4 +1,7 @@
 <h1>Questions HomePage!! - All Questions</h1>
+
+<%= link_to "Create New Question", new_question_path, class: 'btn btn-success' %>
+
 <%@questions.each do |question| %>
     <div class="media">
         <div class="media-body">

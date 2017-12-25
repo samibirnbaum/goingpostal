@@ -52,8 +52,22 @@ let(:my_question) {Question.create!(title: "question title", body: "question bod
       get :new
       expect(response).to have_http_status(:success)
     end
+
+    it "renders the #new view" do
+      get :new
+      expect(response).to render_template(:new)
+    end
+
+    it "assigns a new question object (to be created in the new view) to @question" do
+      get :new
+      expect(assigns(:question)).to be_an_instance_of(Question)
+    end
   end
 
+  
+  
+  
+  
   describe "GET #edit" do
     it "returns http success" do
       get :edit
@@ -72,12 +86,25 @@ let(:my_question) {Question.create!(title: "question title", body: "question bod
 
 
 
-  # describe "GET #create" do
-  #   it "returns http success" do
-  #     get :create
-  #     expect(response).to have_http_status(:success)
-  #   end
-  # end
+  describe "POST #create" do
+    it "assigns to @question the url parameters it receives" do
+      post :create, params: {question: {title: "create1title", body:"create1body", resolved: false}}
+      expect(assigns(:question).title).to eq("create1title")
+      expect(assigns(:question).body).to eq("create1body")
+      expect(assigns(:question).resolved).to eq(false) 
+    end
+
+    it "increases rows in the db by 1" do
+      expect{ 
+        post :create, params: {question: {title: "create1title", body:"create1body", resolved: false}}
+      }.to change{Question.count}.by(1)
+    end
+
+    it "redirects to #show view, using question id just created" do
+      post :create, params: {question: {title: "create1title", body:"create1body", resolved: false}}
+      expect(response).to redirect_to(question_path(Question.last.id))
+    end
+  end
 
   # describe "GET #update" do
   #   it "returns http success" do
