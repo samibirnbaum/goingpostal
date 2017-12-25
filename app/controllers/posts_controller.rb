@@ -44,7 +44,17 @@ class PostsController < ApplicationController
       flash.now[:alert] = "There was an error processing your update - Please try again."
       render :edit
     end
+  end
 
-
+  def destroy
+    @post = Post.find(params[:id]) #first get row from db
+    
+    if @post.destroy #destory row in db
+      flash[:notice] = "\"#{@post.title}\" was deleted successfully."
+      redirect_to(posts_path)
+    else
+      flash.now[:alert] = "There was an error deleting the post."
+      render :show
+    end
   end
 end

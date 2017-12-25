@@ -115,5 +115,17 @@ RSpec.describe PostsController, type: :controller do
       expect(response).to redirect_to Post.last
     end
   end
+  
+  describe "DELETE destroy" do
+    it "deletes the selected post from the database" do
+      delete :destroy, params: {id: my_post.id}
+      expect(Post.where({id: my_post.id}).size).to eq(0)
+    end
+
+    it "redirects us back to posts home page (index)" do
+      delete :destroy, params: {id: my_post.id}
+      expect(response).to redirect_to(posts_path)
+    end
+  end
 
 end
