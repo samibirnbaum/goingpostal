@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
-let(:my_question) {Question.create!(title: "question title", body: "question body", resolved: false)}
+  let(:my_question) {Question.create!(title: "question title", body: "question body", resolved: false)}
+  
   describe "GET #index" do
     it "returns http success" do
       get :index
@@ -70,8 +71,20 @@ let(:my_question) {Question.create!(title: "question title", body: "question bod
   
   describe "GET #edit" do
     it "returns http success" do
-      get :edit
+      get :edit, params: {id: my_question.id}
       expect(response).to have_http_status(:success)
+    end
+
+    it "renders the #edit view" do
+      get :edit, params: {id: my_question.id}
+      expect(response).to render_template(:edit)
+    end
+
+    it "assigns to @question the question with the id received in the request" do
+      get :edit, params: {id: my_question.id}
+      expect(assigns(:question).title).to eq(my_question.title)
+      expect(assigns(:question).body).to eq(my_question.body)
+      expect(assigns(:question).id).to eq(my_question.id) 
     end
   end
 
@@ -106,18 +119,37 @@ let(:my_question) {Question.create!(title: "question title", body: "question bod
     end
   end
 
-  # describe "GET #update" do
-  #   it "returns http success" do
-  #     get :update
-  #     expect(response).to have_http_status(:success)
-  #   end
-  # end
+  
+  
+  describe "PUT #update" do
+    it "assigns the question from the database with this id to @question" do
+      put :update, params: {id: my_question.id, question: {title: "updated title", body: "updated body", resolved: true}}
+      expect(assigns(:question).id).to eq(my_question.id)
+    end
 
-  # describe "GET #delete" do
-  #   it "returns http success" do
-  #     get :delete
-  #     expect(response).to have_http_status(:success)
-  #   end
-  # end
+    it "assigns updates based on parameters to the question" do
+      put :update, params: {id: my_question.id, question: {title: "updated title", body: "updated body", resolved: true}}
+      expect(assigns(:question).title).to eq("updated title")
+      expect(assigns(:question).body).to eq("updated body")
+      expect(assigns(:question).resolved).to eq(true)
+    end
+
+    it "shows the new updated question in the #show view" do
+      put :update, params: {id: my_question.id, question: {title: "updated title", body: "updated body", resolved: true}}
+      expect(response).to redirect_to(question_path(my_question.id))
+    end
+  end
+
+  describe "DELETE #destroy" do
+    it "deletes the question with passed in id from the database" do
+      delete :destroy, params: {id: my_question.id}
+      expect(Question.where(id: my_question.id).size).to eq(0)
+    end
+
+    it "after deletion, redirects you back to the homepage for questions" do
+      delete :destroy, params: {id: my_question.id}
+      expect(response).to redirect_to(questions_path)
+    end
+  end
 
 end
