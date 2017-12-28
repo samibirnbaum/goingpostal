@@ -1,8 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Comment, type: :model do
-  let(:post) { Post.create!(title: "New Post Title", body: "New Post Body") }
-  let(:comment) {Comment.create!(body: "comment body", post: post)} #for some reason this references the post we just created as the post_id
+  let(:topic) {Topic.create!(name: RandomData.random_sentence, description: RandomData.random_paragraph)}
+  let(:post) {topic.posts.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph) }
+  let(:comment) {Comment.create!(body: "comment body", post: post)} #post references that post object we just created on line above
 
   describe "attributes" do
     it "has body attribute" do

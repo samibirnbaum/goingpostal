@@ -46,4 +46,5 @@ end
  group :development, :test do
   gem 'rspec-rails', '~> 3.0'
   gem 'rails-controller-testing'
+  gem 'shoulda' #helpful for model association tests
 end
