@@ -1,15 +1,11 @@
 class PostsController < ApplicationController
-  def index
-    @posts = Post.all #returns array from db of all post objects
-  end
 
   def show
-    #recieves post id, assign that post to @post var
-    post_id = params[:id] #id obtained from the params hash in the url 
-    @post = Post.find(post_id)
+    @post = Post.find(params[:id])
   end
 
   def new
+    @topic = Topic.find(params[:topic_id])
     @post = Post.new  #a new post object taken from the model to be sent to the view
   end
 
@@ -17,10 +13,11 @@ class PostsController < ApplicationController
     @post = Post.new            #creates new post object using info from form
     @post.title = params[:post][:title] #params is a method which accesses the parameters of a POST method, POST url parameters = 2d hash
     @post.body = params[:post][:body]
+    @post.topic = Topic.find(params[:topic_id])
 
     if @post.save #AR method to save to the db was successful
-      flash[:notice] = "Post was saved." #on the flash hash sets key :notice to this string value - will display hash in view
-      redirect_to(post_path(Post.last.id)) #redirects to posts/show view - GET method
+      flash[:notice] = "Post was saved to topic #{@post.topic.name}." #on the flash hash sets key :notice to this string value - will display hash in view
+      redirect_to(topic_post_path(@post.topic_id, Post.last.id)) #redirects to posts/show view - GET method
     else
       flash.now[:alert] = "There was an error saving the post. Please try again."
       render :new #GET call
@@ -39,7 +36,7 @@ class PostsController < ApplicationController
     
     if @post.save
       flash[:notice] = "Your post was successfully updated!"
-      redirect_to(post_path(params[:id]))
+      redirect_to(topic_post_path(@post.topic_id, Post.last.id))
     else
       flash.now[:alert] = "There was an error processing your update - Please try again."
       render :edit
@@ -51,10 +48,10 @@ class PostsController < ApplicationController
     
     if @post.destroy #destory row in db
       flash[:notice] = "\"#{@post.title}\" was deleted successfully."
-      redirect_to(posts_path)
+      redirect_to(topic_path(params[:topic_id]))
     else
       flash.now[:alert] = "There was an error deleting the post."
-      render :show
+      render(topic_path(params[:topic_id]))
     end
   end
 end

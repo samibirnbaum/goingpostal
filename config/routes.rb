@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
   
-  resources :topics
+  resources :topics do
+    resources :posts, except: [:index]
+  end
   
-  resources :posts #creates routes from the url to the posts controller
-
   get 'about' => 'welcome#about' #url of about should route to about method in welcome controller
 
   root 'welcome#index' #using root url go to index method in welcome controller

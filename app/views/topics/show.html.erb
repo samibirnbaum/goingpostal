@@ -1,3 +1,5 @@
+<h1>Show Topic</h1>
+
 <h1><%=@topic.name%></h1>
 
 <%=link_to("Edit Topic", edit_topic_path(@topic.id), class: "btn btn-success")%>
@@ -13,14 +15,20 @@
             <div class="media">
                 <div class="media-body">
                     <h4 class="media-heading">
-                        <%=link_to(post.title, post_path(post.id)) %>
+                        <%=link_to(post.title, topic_post_path(@topic.id, post.id)) %>
                     </h4>
+
+                    <small>
+                        Submitted <%=time_ago_in_words(post.created_at)%> ago <br>
+                        <%=post.comments.size%> Comments
+                    </small>
+                
                 </div>
             </div>
         <%end%>
     <div>
 
     <div class="col-md-4">
-        <%=link_to("New Post", new_post_path(@topic.id), class: "btn btn-success")%> <!--arg is assigned to :format param this means any new post can be associated with the topic id found in :format->
+        <%=link_to("New Post", new_topic_post_path(@topic.id), class: "btn btn-success")%> <!--arg is assigned to :topics_id param in URL this means any new post can be associated with the topic id found in :topic_id-->
     </div>
 </div>
