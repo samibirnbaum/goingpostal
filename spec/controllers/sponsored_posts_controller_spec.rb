@@ -39,9 +39,37 @@ RSpec.describe SponsoredPostsController, type: :controller do
             expect{post :create, params: {sponsored_post: {title: "SP title", body: "SP body", price: 3000}, topic_id: my_topic.id}}.to change{SponsoredPost.all.size}.by(1)
         end
 
-        it "redirects user when successful to spost show view" do
+        it "redirects user when successful to topic show view" do
             post :create, params: {sponsored_post: {title: "SP title", body: "SP body", price: 3000}, topic_id: my_topic.id}
-            expect(response).to redirect_to(topic_sponsored_post_path(my_topic.id, SponsoredPost.last.id))
+            expect(response).to redirect_to(topic_path(my_topic.id))
+        end
+    end
+
+    describe "GET #show" do
+        it "assigns to @spost the post id received in the url" do
+            get :show, params: {topic_id: my_topic.id, id:my_spost.id}
+            expect(assigns(:spost)).to eq(my_spost)
+        end
+
+        it "returns http success" do
+            get :show, params: {topic_id: my_topic.id, id:my_spost.id}
+            expect(response).to have_http_status(:success)
+        end
+
+        it "renders the #show view" do
+            get :show, params: {topic_id: my_topic.id, id:my_spost.id}
+            expect(response).to render_template(:show)
+        end
+    end
+
+    describe "DELETE #destroy" do 
+        it "will delete the spost with the received id from the database" do
+            delete :destroy, params: {topic_id: my_topic.id, id: my_spost.id}
+            expect(SponsoredPost.where(id: my_spost.id)).to eq([])
+        end
+        it "takes the user back to the topics show page" do
+            delete :destroy, params: {topic_id: my_topic.id, id: my_spost.id}
+            expect(response).to redirect_to(topic_path(my_topic.id))
         end
     end
 end

@@ -13,7 +13,7 @@ class SponsoredPostsController < ApplicationController
 
         if @spost.save
             flash[:notice] = "Your new sponsored post has been saved"
-            redirect_to(topic_sponsored_post_path(@spost.topic_id, SponsoredPost.last.id))
+            redirect_to(topic_path(params[:topic_id]))
         else
             flash.now[:alert] = "Error creating sponsored post. Please try again"
             render :new
@@ -21,6 +21,18 @@ class SponsoredPostsController < ApplicationController
     end
 
     def show
-        
+        @spost = SponsoredPost.find(params[:id])
+    end
+
+    def destroy
+        @spost = SponsoredPost.find(params[:id])
+
+        if @spost.destroy
+            flash[:notice] = "\"#{@spost.title}\" was successfully destroyed"
+            redirect_to(topic_path(params[:topic_id]))
+        else
+            flash.now[:alert] = "Error. Please try again"
+            render :show
+        end
     end
 end

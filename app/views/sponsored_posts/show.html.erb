@@ -1,0 +1,14 @@
+<h1>Show Sponsored Post</h1>
+
+<h1><%=@spost.title%></h1>
+
+<div class="row">
+    <div class="col-md-8">
+        <p><%= @spost.body %></p>
+        <p>Price: £<%= @spost.price %></p>
+    </div>
+    <div class="col-md-4">
+        <%# <%= link_to "Edit", edit_topic_post_path(@post.topic_id, @post.id), class: 'btn btn-success' %>
+        <%= link_to "Delete Post", "/topics/#{@spost.topic_id}/sponsored_posts/#{@spost.id}", method: :delete, class: 'btn btn-danger', data: {confirm: 'Are you sure you want to delete this post?'}%>
+    </div>
+</div>
