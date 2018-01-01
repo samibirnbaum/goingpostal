@@ -8,6 +8,15 @@ end
 
 topics = Topic.all
 
+20.times do
+    SponsoredPost.create!(
+        title: RandomData.random_sentence,
+        body: RandomData.random_paragraph, 
+        price: RandomData.random_integer,
+        topic_id: topics.sample.id
+    )
+end
+
 50.times do
     Post.create!(
         title: RandomData.random_sentence, #use these methods on the class to create strings for our attributes
@@ -28,4 +37,5 @@ end
 puts "Seed finished"
 puts "#{Topic.count} topics created"
 puts "#{Post.count} posts created"
+puts "#{SponsoredPost.count} sponsored posts created"
 puts "#{Comment.count} comments created"
