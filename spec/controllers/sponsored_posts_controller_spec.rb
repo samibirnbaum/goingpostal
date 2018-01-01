@@ -72,4 +72,52 @@ RSpec.describe SponsoredPostsController, type: :controller do
             expect(response).to redirect_to(topic_path(my_topic.id))
         end
     end
+
+    describe "GET #edit" do
+        it "assigns to @spost the spost we want to edit" do
+            get :edit, params: {topic_id: my_topic.id, id: my_spost.id}
+            expect(assigns(:spost)).to eq(my_spost)
+        end
+
+        it "assigns to @topic the topic whose post we are editing" do
+            get :edit, params: {topic_id: my_topic.id, id: my_spost.id}
+            expect(assigns(:topic)).to eq(my_topic)
+        end
+
+        it "returns http status success" do
+            get :edit, params: {topic_id: my_topic.id, id: my_spost.id}
+            expect(response).to have_http_status(:success)
+        end
+
+        it "renders the edit template" do
+            get :edit, params: {topic_id: my_topic.id, id: my_spost.id}
+            expect(response).to render_template(:edit)
+        end
+    end
+
+    describe "PUT #update" do
+        it "assigns to @spost the spost to be updated" do
+            put :update, params: {sponsored_post: {title: "update title time", body: "update body time", price: 9876}, topic_id: my_topic.id, id: my_spost.id}
+            expect(assigns(:spost).id).to eq(my_spost.id)
+        end
+
+        it "updates @spost with the new values from the form" do
+            put :update, params: {sponsored_post: {title: "update title time", body: "update body time", price: 9876}, topic_id: my_topic.id, id: my_spost.id}
+            expect(assigns(:spost).title).to eq("update title time")
+            expect(assigns(:spost).body).to eq("update body time")
+            expect(assigns(:spost).price).to eq(9876)
+        end
+
+        it "saves these values to the database - call from db shows updated values" do
+            put :update, params: {sponsored_post: {title: "update title time", body: "update body time", price: 9876}, topic_id: my_topic.id, id: my_spost.id}
+            expect(SponsoredPost.find(my_spost.id).title).to eq("update title time")
+            expect(SponsoredPost.find(my_spost.id).body).to eq("update body time")
+            expect(SponsoredPost.find(my_spost.id).price).to eq(9876)
+        end
+
+        it "redirects user back to the topics #show view" do
+            put :update, params: {sponsored_post: {title: "update title time", body: "update body time", price: 9876}, topic_id: my_topic.id, id: my_spost.id}
+            expect(response).to redirect_to(topic_path(my_topic.id))
+        end
+    end
 end
