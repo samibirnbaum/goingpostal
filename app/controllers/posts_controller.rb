@@ -10,6 +10,7 @@ class PostsController < ApplicationController
   end
 
   def create
+    @topic = Topic.find(params[:topic_id])
     @post = Post.new            #creates new post object using info from form
     @post.title = params[:post][:title] #params is a method which accesses the parameters of a POST method, POST url parameters = 2d hash
     @post.body = params[:post][:body]
@@ -20,7 +21,7 @@ class PostsController < ApplicationController
       redirect_to(topic_post_path(@post.topic_id, Post.last.id)) #redirects to posts/show view - GET method
     else
       flash.now[:alert] = "There was an error saving the post. Please try again."
-      render :new #GET call
+      render :new
     end
   end
 

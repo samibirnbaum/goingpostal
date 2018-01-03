@@ -1,0 +1,31 @@
+<%= form_for([topic_lv, post_lv]) do |f|%>
+    
+    <!--the first time this form renders, it used new actions @post + @topic (this post has no erros object becuase hasn't been validated yet)-->
+    <!--the second time it renders it uses creates @post + @topic-->
+
+    <%if post_lv.errors.any?%>
+        <div class="alert alert-danger">
+            <h4><%=pluralize(post_lv.errors.count, "Error")%></h4>
+            <ul>
+                <% post_lv.errors.full_messages.each do |msg| %>
+                  <li><%=msg%></li>
+                <% end %>
+            </ul>
+        </div>
+    <% end %>
+    
+    
+    <%= form_group_tag(post_lv.errors[:title]) do%>
+        <%= f.label(:title)%> <!--this actually accesses current value to posts title attribute-->
+        <%= f.text_field(:title, class: "form-control", placeholder: "Enter Post Title")%>
+    <% end %>
+    
+    <%= form_group_tag(post_lv.errors[:body]) do%>
+        <%= f.label(:body)%>
+        <%= f.text_area(:body, class: "form-control", placeholder: "Enter Body Title")%>
+    <% end %>
+    
+    <div class="form-group">
+        <%= f.submit(submit_button_text, class: "btn btn-success")%>
+    </div>
+<%end %>
