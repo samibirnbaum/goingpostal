@@ -35,4 +35,17 @@ RSpec.describe User, type: :model do
       expect(user_invalid_email).to_not be_valid
     end
   end
+
+  describe "before_save formatting of names to capital first letters" do
+    it "should capitalize users first and last name" do
+      user = User.create!(name: "samuel birnbaum", email:"s@gmail.com", password: "password")
+      expect(user.name).to eq("Samuel Birnbaum")
+    end
+
+    it "should keep already capitalized names the same" do
+      user = User.create!(name: "Samuel Birnbaum", email:"s@gmail.com", password: "password")
+      expect(user.name).to eq("Samuel Birnbaum")
+    end
+
+  end
 end

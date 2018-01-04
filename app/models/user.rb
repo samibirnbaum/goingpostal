@@ -9,6 +9,7 @@ class User < ApplicationRecord
     
     #before try to save and make validations
     before_save { self.email = email.downcase if email.present? }
+    before_save { self.name = self.name.split.map! {|name| name.capitalize}.join(" ") if self.name.present? }
 
     
     #these tests run post save/create/update
