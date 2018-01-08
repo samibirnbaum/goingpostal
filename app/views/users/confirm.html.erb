@@ -5,5 +5,5 @@
 <h5>Name: <%=@user.name%></h5>
 <h5>Email: <%=@user.email%></h5>
 
-<%= button_to "Yes", {controller: "users", action: "create", params: params.permit!}, class: 'btn btn-success' %>
+<%= button_to "Yes", {controller: "users", action: "create", params: params}, class: 'btn btn-success' %>
 <%= button_to "No", {controller: "users", action: "new"}, method: :get, class: 'btn btn-danger' %>
