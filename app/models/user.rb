@@ -31,4 +31,8 @@ class User < ApplicationRecord
     uniqueness: { case_sensitive: false }
 
     has_secure_password
+
+    def user_params 
+        params.require(:user).permit!
+    end
 end

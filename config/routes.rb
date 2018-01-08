@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   end
 
   resources :users, only: [:new, :create]
+
+  post "/users/confirm"
   
   get 'about' => 'welcome#about' #url of about should route to about method in welcome controller
 
