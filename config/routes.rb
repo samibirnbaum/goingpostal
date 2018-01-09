@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   end
 
   resources :users, only: [:new, :create]
+
+  resources :sessions, only: [:new, :create, :destroy]
   
   get 'about' => 'welcome#about' #url of about should route to about method in welcome controller
 
