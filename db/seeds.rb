@@ -6,7 +6,7 @@ require "random_data" #requires a separate file of ruby code - often a class
         password: RandomData.random_sentence
     )
 end
-#h
+
 user = User.first
 user.update_attributes!(
   email: 'sami_birnbaum@hotmail.com',
