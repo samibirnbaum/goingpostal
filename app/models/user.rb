@@ -6,7 +6,8 @@ class User < ApplicationRecord
     #@password - user input string
     #@password_confrimation - just to make user retype password
 
-    
+    has_many :posts, dependent: :destroy
+
     #before try to save and make validations
     before_save { self.email = email.downcase if email.present? }
 

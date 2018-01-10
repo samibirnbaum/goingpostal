@@ -15,6 +15,8 @@ RSpec.describe User, type: :model do
   it { is_expected.to validate_length_of(:password).is_at_least(6) }
   it { is_expected.to have_secure_password }
 
+  it { is_expected.to have_many(:posts) }
+
   describe "attributes" do
     it "has the attrs @name @email @password_digest" do
       expect(user).to have_attributes(name: "Samuel", email:"s@gmail.com")

@@ -1,4 +1,20 @@
 require "random_data" #requires a separate file of ruby code - often a class
+5.times do
+    User.create!(
+        name: RandomData.random_name,
+        email: RandomData.random_email,
+        password: RandomData.random_sentence
+    )
+end
+
+user = User.first
+user.update_attributes!(
+  email: 'sami_birnbaum@hotmail.com',
+  password: 'password'
+)
+
+users = User.all
+
 15.times do
     Topic.create!(
         name: RandomData.random_sentence,
@@ -12,7 +28,8 @@ topics = Topic.all
     Post.create!(
         title: RandomData.random_sentence, #use these methods on the class to create strings for our attributes
         body: RandomData.random_paragraph,
-        topic: topics.sample #array method - picks out unique topic to assoicate post with
+        topic: topics.sample, #array method - picks out unique topic to assoicate post with
+        user: users.sample
     )
 end
 
@@ -26,6 +43,7 @@ posts = Post.all #retrieves every post object from the db and stores it in varia
 end
 
 puts "Seed finished"
+puts "#{User.count} users created"
 puts "#{Topic.count} topics created"
 puts "#{Post.count} posts created"
 puts "#{Comment.count} comments created"

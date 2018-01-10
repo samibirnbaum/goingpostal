@@ -1,10 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe PostsController, type: :controller do
-
-  #I have access to the post model to create a new post object and save to the db
+  let(:my_user) {User.create!(name: "Samuel", email:"s@gmail.com", password: "password")}
   let(:my_topic) {Topic.create!(name: RandomData.random_sentence, description: RandomData.random_paragraph)}
-  let(:my_post) {Post.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph, topic: my_topic)}
+  let(:my_post) {Post.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph, topic: my_topic, user: my_user)}
 
   
   
