@@ -12,10 +12,7 @@ class TopicsController < ApplicationController
     end
 
     def create
-        @topic = Topic.new
-        @topic.name = params[:topic][:name]
-        @topic.description = params[:topic][:description]
-        @topic.public = params[:topic][:public]
+        @topic = Topic.new(topic_params)
 
         if @topic.save
             flash[:notice] = "Your new topic was successfully created"
@@ -32,9 +29,7 @@ class TopicsController < ApplicationController
 
     def update
         @topic = Topic.find(params[:id])        
-        @topic.name = params[:topic][:name]
-        @topic.description = params[:topic][:description]
-        @topic.public = params[:topic][:public]
+        @topic.assign_attributes(topic_params)
 
         if @topic.save
             flash[:notice] = "Your updated topic was successfully saved"
@@ -56,4 +51,9 @@ class TopicsController < ApplicationController
             redirect_to(topic_path(@topic.id))
         end
     end
+
+    private
+        def topic_params
+            params.require(:topic).permit(:name, :description, :public)
+        end
 end

@@ -1,5 +1,7 @@
 class PostsController < ApplicationController
 
+  before_action :require_sign_in, except: :show #before all actions run this method (except show)
+
   def show
     @post = Post.find(params[:id])
   end
@@ -11,10 +13,8 @@ class PostsController < ApplicationController
 
   def create
     @topic = Topic.find(params[:topic_id])
-    @post = Post.new            #creates new post object using info from form
-    @post.title = params[:post][:title] #params is a method which accesses the parameters of a POST method, POST url parameters = 2d hash
-    @post.body = params[:post][:body]
-    @post.topic = Topic.find(params[:topic_id])
+    @post = @topic.posts.build(post_params)
+    @post.user = current_user
 
     if @post.save #AR method to save to the db was successful
       flash[:notice] = "Post was saved to topic #{@post.topic.name}." #on the flash hash sets key :notice to this string value - will display hash in view
@@ -32,12 +32,11 @@ class PostsController < ApplicationController
 
   def update
     @post = Post.find(params[:id])
-    @post.title = params[:post][:title]
-    @post.body = params[:post][:body]
+    @post.assign_attributes(post_params)
     
     if @post.save
       flash[:notice] = "Your post was successfully updated!"
-      redirect_to(topic_post_path(@post.topic_id, Post.last.id))
+      redirect_to(topic_post_path(@post.topic_id, @post.id))
     else
       flash.now[:alert] = "There was an error processing your update - Please try again."
       render :edit
@@ -55,4 +54,9 @@ class PostsController < ApplicationController
       render(topic_path(params[:topic_id]))
     end
   end
+
+  private
+    def post_params
+      params.require(:post).permit(:title, :body)
+    end
 end
