@@ -6,6 +6,8 @@ class Post < ApplicationRecord #ApplicationRecord inherits from ActiveRecord::Ba
     has_many :comments, dependent: :destroy #when a certain post is deleted all its comments are also deleted
 
     default_scope { order('created_at DESC') }
+    scope :ordered_by_title, -> {order(title: :asc)}
+    scope :ordered_by_reverse_created_at, -> {order(created_at: :asc)}
 
     validates(:title, presence: true, length: {minimum: 5})
     validates(:body, presence: true, length: {minimum: 20})
