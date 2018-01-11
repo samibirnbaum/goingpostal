@@ -22,6 +22,49 @@ RSpec.describe User, type: :model do
       expect(user).to have_attributes(name: "Samuel", email:"s@gmail.com")
       expect(user.attributes).to include("password_digest") #cant check for password because it has become a hashed P_D
     end
+
+    it "has attribute @role" do
+      expect(user).to respond_to(:role)
+    end
+
+    it "has concealed enum method admin?" do
+      expect(user).to respond_to(:admin?)
+    end
+
+    it "has concealed enum method member?" do
+      expect(user).to respond_to(:member?)
+    end
+  end
+
+  describe "role" do 
+    it "is member by default" do
+      expect(user.role).to eq("member")
+    end
+
+    context "member user" do
+      it "returns true when #member? called" do
+        expect(user.member?).to be_truthy
+      end
+
+      it "returns false when #admin? called" do
+        expect(user.admin?).to be_falsey
+      end
+    end
+
+    context "admin user" do
+
+      before do
+        user.admin! #sets role attribute to = "admin" - one of ?/! methods provided by an anum attribute
+      end
+
+      it "returns true on #admin?" do
+        expect(user.admin?).to be_truthy
+      end
+
+      it "returns false on #member?" do
+        expect(user.member?).to be_falsey
+      end
+    end
   end
 
   #true negative
