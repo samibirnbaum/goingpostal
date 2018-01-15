@@ -2,13 +2,16 @@ class User < ApplicationRecord
     #@name
     #@email
     #@password_digest - encrypted hash in db
+    #@role
     
     #@password - user input string
     #@password_confrimation - just to make user retype password
+    enum role: [:member, :admin]
 
     has_many :posts, dependent: :destroy
 
     #before try to save and make validations
+    before_save { self.role = :member if self.role.nil?}    #default value will be member unless we code otherwise
     before_save { self.email = email.downcase if email.present? }
 
     

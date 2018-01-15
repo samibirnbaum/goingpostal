@@ -1,6 +1,7 @@
 class PostsController < ApplicationController
 
   before_action :require_sign_in, except: :show #before all actions run this method (except show)
+  before_action :authorise_user, except: [:show, :new, :create]
 
   def show
     @post = Post.find(params[:id])
@@ -18,7 +19,7 @@ class PostsController < ApplicationController
 
     if @post.save #AR method to save to the db was successful
       flash[:notice] = "Post was saved to topic #{@post.topic.name}." #on the flash hash sets key :notice to this string value - will display hash in view
-      redirect_to(topic_post_path(@post.topic_id, Post.last.id)) #redirects to posts/show view - GET method
+      redirect_to(topic_post_path(@post.topic_id, @post.id)) #redirects to posts/show view - GET method
     else
       flash.now[:alert] = "There was an error saving the post. Please try again."
       render :new
@@ -58,5 +59,14 @@ class PostsController < ApplicationController
   private
     def post_params
       params.require(:post).permit(:title, :body)
+    end
+
+    def authorise_user
+      post = Post.find(params[:id]) #using post id in url request get the post
+
+      unless current_user == post.user || current_user.admin?
+        flash[:alert] = "you must be an admin to do that"
+        redirect_to topic_post_path(post.topic_id, post.id)
+      end
     end
 end

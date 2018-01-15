@@ -7,11 +7,19 @@ require "random_data" #requires a separate file of ruby code - often a class
     )
 end
 
-user = User.first
-user.update_attributes!(
-  email: 'sami_birnbaum@hotmail.com',
-  password: 'password'
+admin = User.create!(
+        name: "Admin",
+        email: "admin@gmail.com",
+        password: "adminn",
+        role: "admin"
+    )
+
+member = User.create!(
+    name: "Member",
+    email: "member@gmail.com",
+    password: "member"
 )
+
 
 users = User.all
 
