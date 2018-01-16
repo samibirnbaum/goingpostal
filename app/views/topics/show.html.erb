@@ -2,12 +2,16 @@
 
 <h1><%=@topic.name%></h1>
 
-<%if user_is_authorized_for_topics?%>
+
     <div class="pull-right">
-        <%=link_to("Edit Topic", edit_topic_path(@topic.id), class: "btn btn-success")%>
-        <%=link_to("Delete Topic", "/topics/#{@topic.id}", method: :delete, class: "btn btn-danger", data: {confirm: "Are you sure you want to delete this topic?"})%>
+        <%if admin? || moderator?%>
+            <%=link_to("Edit Topic", edit_topic_path(@topic.id), class: "btn btn-success")%>
+        <% end %>
+        <%if admin?%>    
+            <%=link_to("Delete Topic", "/topics/#{@topic.id}", method: :delete, class: "btn btn-danger", data: {confirm: "Are you sure you want to delete this topic?"})%>
+        <% end %>
     </div>
-<% end %>
+
 
 <!--show every post associated with that topic-->
 <div class="row">

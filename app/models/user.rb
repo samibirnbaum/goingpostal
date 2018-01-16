@@ -6,7 +6,7 @@ class User < ApplicationRecord
     
     #@password - user input string
     #@password_confrimation - just to make user retype password
-    enum role: [:member, :admin]
+    enum role: [:member, :admin, :moderator]
 
     has_many :posts, dependent: :destroy
 

@@ -20,6 +20,12 @@ member = User.create!(
     password: "member"
 )
 
+moderator = User.create!(
+    name: "Moderator",
+    email: "moderator@gmail.com",
+    password: "moderator"
+    role: "moderator"
+)
 
 users = User.all
 

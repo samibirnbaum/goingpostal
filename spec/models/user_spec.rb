@@ -34,6 +34,10 @@ RSpec.describe User, type: :model do
     it "has concealed enum method member?" do
       expect(user).to respond_to(:member?)
     end
+
+    it "has concealed enum method moderator?" do
+      expect(user).to respond_to(:moderator?)
+    end
   end
 
   describe "role" do 
@@ -49,6 +53,10 @@ RSpec.describe User, type: :model do
       it "returns false when #admin? called" do
         expect(user.admin?).to be_falsey
       end
+
+      it "returns false on #moderator?" do
+        expect(user.moderator?).to be_falsey
+      end
     end
 
     context "admin user" do
@@ -63,6 +71,29 @@ RSpec.describe User, type: :model do
 
       it "returns false on #member?" do
         expect(user.member?).to be_falsey
+      end
+
+      it "returns false on #moderator?" do
+        expect(user.moderator?).to be_falsey
+      end
+    end
+
+    context "moderator user" do
+
+      before do
+        user.moderator! #sets role attribute to = "admin" - one of ?/! methods provided by an anum attribute
+      end
+
+      it "returns true on #moderator?" do
+        expect(user.moderator?).to be_truthy
+      end
+
+      it "returns false on #member?" do
+        expect(user.member?).to be_falsey
+      end
+
+      it "returns false on #admin?" do
+        expect(user.admin?).to be_falsey
       end
     end
   end
