@@ -41,12 +41,16 @@ end
 
  gem 'bcrypt'
  
- group :development do
-   gem 'listen', '~> 3.0.5'
- end
+group :development do
+  gem 'listen', '~> 3.0.5'
+end
 
- group :development, :test do
+group :development, :test do
   gem 'rspec-rails', '~> 3.0'
   gem 'rails-controller-testing'
   gem 'shoulda' #helpful for model association tests
+end
+
+group :development do
+  gem "rails-erd"
 end

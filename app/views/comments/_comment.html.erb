@@ -1,0 +1,12 @@
+<div class="media">
+    <div class="media-body">
+        <small>
+            <%= comment.user.name %> commented <%= time_ago_in_words(comment.created_at) %> ago
+            <% if authorised_user_to_delete_comment?(comment) %>
+                | <%= link_to("Delete", "/posts/#{@post.id}/comments/#{comment.id}", method: :delete)%>  
+            <% end %>
+        </small>
+        
+        <p><%= comment.body %></p>
+    </div>
+</div>

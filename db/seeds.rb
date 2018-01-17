@@ -45,6 +45,7 @@ posts = Post.all #retrieves every post object from the db and stores it in varia
 
 100.times do
     Comment.create!(
+        user: users.sample,
         post: posts.sample, #array method to pick out random element, in this case a post object
         body: RandomData.random_paragraph
     )
