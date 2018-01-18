@@ -23,6 +23,13 @@ member = User.create!(
 
 users = User.all
 
+
+
+
+
+
+
+
 15.times do
     Topic.create!(
         name: RandomData.random_sentence,
@@ -32,8 +39,15 @@ end
 
 topics = Topic.all
 
+
+
+
+
+
+
+
 50.times do
-    Post.create!(
+    post = Post.create!(
         title: RandomData.random_sentence, #use these methods on the class to create strings for our attributes
         body: RandomData.random_paragraph,
         topic: topics.sample, #array method - picks out unique topic to assoicate post with
@@ -41,7 +55,20 @@ topics = Topic.all
     )
 end
 
+post.update_attribute(:created_at, rand(10.minutes .. 1.year).ago)
+
 posts = Post.all #retrieves every post object from the db and stores it in variable called posts - returns array
+
+
+
+
+
+
+
+
+
+
+
 
 100.times do
     Comment.create!(

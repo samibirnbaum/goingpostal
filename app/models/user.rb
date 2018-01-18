@@ -10,6 +10,7 @@ class User < ApplicationRecord
 
     has_many :posts, dependent: :destroy
     has_many :comments, dependent: :destroy
+    has_many :votes, dependent: :destroy
 
     #before try to save and make validations
     before_save { self.role = :member if self.role.nil?}    #default value will be member unless we code otherwise
