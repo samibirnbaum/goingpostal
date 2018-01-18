@@ -24,7 +24,7 @@
 
                     <small>
                         Submitted <%=time_ago_in_words(post.created_at)%> ago by <%=post.user.name%> <br>
-                        <%=post.comments.size%> Comments
+                        <%=post.comments.size%> <%="Comment".pluralize(post.comments.size)%>
                     </small>
                 
                 </div>
