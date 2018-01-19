@@ -35,4 +35,12 @@ class Post < ApplicationRecord #ApplicationRecord inherits from ActiveRecord::Ba
         new_rank = age_in_days + self.points
         self.update_attribute(:rank, new_rank)
     end
+
+    after_create :create_vote
+
+    
+    private
+        def create_vote
+          Vote.create!(value: 1, post: self, user: self.user)  
+        end
 end
