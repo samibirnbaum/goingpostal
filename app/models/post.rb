@@ -9,7 +9,7 @@ class Post < ApplicationRecord #ApplicationRecord inherits from ActiveRecord::Ba
     has_many :comments, dependent: :destroy
     has_many :votes, dependent: :destroy
 
-    default_scope { order('created_at DESC') }
+    default_scope { order('rank DESC') }
 
     validates(:title, presence: true, length: {minimum: 5})
     validates(:body, presence: true, length: {minimum: 20})
@@ -28,5 +28,11 @@ class Post < ApplicationRecord #ApplicationRecord inherits from ActiveRecord::Ba
         up_votes = self.votes.where(value: 1).count
         down_votes = self.votes.where(value: -1).count
         up_votes - down_votes     
+    end
+
+    def update_rank
+        age_in_days = (self.created_at - Time.new(1970,1,1)) / 1.day.seconds
+        new_rank = age_in_days + self.points
+        self.update_attribute(:rank, new_rank)
     end
 end

@@ -1,12 +1,15 @@
 <h1>Show Post</h1>
 
-<h1>
-    <%=@post.title%> <br>
-    <small>
-        Submitted <%=time_ago_in_words(@post.created_at)%> ago by <%=@post.user.name%>
-    </small>    
-</h1>
+<div>
+    <%=render partial: "votes/voting", locals: {post: @post}%>
 
+    <h1>
+        <%=@post.title%> <br>
+        <small>
+            Submitted <%=time_ago_in_words(@post.created_at)%> ago by <%=@post.user.name%>
+        </small>    
+    </h1>
+</div>
 
 <div class="row">
     <div class="col-md-8">
@@ -29,4 +32,15 @@
         </div>
     <% end %>
 
+    <div class="col-md-4">
+        <h3>
+            <%=pluralize(@post.points, "Point")%>
+            <div>
+                <small>
+                    <%=pluralize(@post.up_votes, "Up-Vote")%>
+                    <%=pluralize(@post.down_votes, "Down-Vote")%>
+                </small>
+            </div>
+        </h3>
+    </div>
 </div>
