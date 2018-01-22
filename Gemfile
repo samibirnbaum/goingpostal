@@ -54,3 +54,5 @@ end
 group :development do
   gem "rails-erd"
 end
+
+gem 'figaro', '1.0'

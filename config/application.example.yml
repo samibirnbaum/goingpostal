@@ -1,0 +1,7 @@
+#the values of these variables are needed for my app but aren't being pushed to git hub
+SENDGRID_USERNAME:
+SENDGRID_PASSWORD:
+
+
+ADMIN_PASSWORD: 
+MEMBER_PASSWORD: 

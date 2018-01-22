@@ -10,14 +10,14 @@ end
 admin = User.create!(
         name: "Admin",
         email: "admin@gmail.com",
-        password: "adminn",
+        password: ENV["ADMIN_PASSWORD"],
         role: "admin"
     )
 
 member = User.create!(
     name: "Member",
     email: "member@gmail.com",
-    password: "member"
+    password: ENV["MEMBER_PASSWORD"]
 )
 
 
