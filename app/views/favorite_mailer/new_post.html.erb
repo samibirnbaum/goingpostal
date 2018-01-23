@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+    </head>
+
+    <body>
+        <h1>Dear <%=@user.name%></h1>
+
+        <p>
+            Thank you for creating your new post "<%= @post.title %>"<br>
+            Great news! Your post has been automatically added to your favorite posts!<br>
+            Anytime a user comments on your post you will recieve an email to let you know.
+        </p>
+
+        <p>
+            <%= link_to "View Post on site", topic_post_url(@topic, @post) %>
+        </p>
+
+        <p>
+            Regards<br>
+            Bloccit Team
+        </p>
+    </body>
+</html>

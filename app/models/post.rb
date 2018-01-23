@@ -2,7 +2,7 @@ class Post < ApplicationRecord #ApplicationRecord inherits from ActiveRecord::Ba
     #@title
     #@body
     #@topic_id
-    #@post_id
+    #@user_id
     
     belongs_to :topic
     belongs_to :user
@@ -36,4 +36,16 @@ class Post < ApplicationRecord #ApplicationRecord inherits from ActiveRecord::Ba
         new_rank = age_in_days + self.points
         self.update_attribute(:rank, new_rank)
     end
+
+    after_create :favorite_post_for_user
+    after_create :email_user_new_favorite_post
+
+    private
+        def favorite_post_for_user
+            Favorite.create!(post: self, user: self.user)
+        end
+
+        def email_user_new_favorite_post
+            FavoriteMailer.new_post(self.user, self, self.topic).deliver_now
+        end
 end

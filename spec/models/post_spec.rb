@@ -25,49 +25,69 @@ RSpec.describe Post, type: :model do
     end
   end
 
-  describe "post methods for votes" do
-    before do
-      3.times {Vote.create!(value: 1, user: user, post: post)}
-      2.times {Vote.create!(value: -1, user: user, post: post)}
+    describe "post methods for votes" do
+        before do
+            3.times {Vote.create!(value: 1, user: user, post: post)}
+            2.times {Vote.create!(value: -1, user: user, post: post)}
+        end
+
+        describe "#up_votes" do
+            it "counts the number of up votes for the given post" do
+                expect(post.up_votes).to eq(Vote.where(value: 1, post: post).count)
+            end
+        end
+
+        describe "#down_votes" do
+            it "counts the number of down votes for the given post" do
+                expect(post.down_votes).to eq(Vote.where(value: -1, post: post).count)
+            end
+        end
+
+        describe "points" do
+            it "returns the sum of all down and up votes" do
+                up_votes = Vote.where(value: 1, post: post).count
+                down_votes = Vote.where(value: -1, post: post).count
+                expect(post.points).to eq(up_votes - down_votes)
+            end
+        end
+
+        describe "#update_rank" do
+            it "calculates the correct rank" do
+                post.update_rank #calls the method
+                expect(post.rank).to eq (post.points + (post.created_at - Time.new(1970,1,1)) / 1.day.seconds)
+            end
+
+            it "updates the rank when up vote is created" do
+                old_rank = post.rank
+                Vote.create!(value: 1, user: user, post: post)
+                expect(post.rank).to eq(old_rank + 1)
+            end
+
+            it "updates the rank when downvote is created" do
+                old_rank = post.rank
+                Vote.create!(value: -1, user: user, post: post)
+                expect(post.rank).to eq(old_rank - 1)
+            end
+        end
     end
 
-    describe "#up_votes" do
-      it "counts the number of up votes for the given post" do
-        expect(post.up_votes).to eq(Vote.where(value: 1, post: post).count)
-      end
+    describe "#after_create" do
+        before do
+            @another_post = Post.new(title: "another post", body: "the body of my post!", topic: topic, user: user)
+        end
+        
+        describe "#favorite_post_for_user" do  
+            it "automatically favorites post for user who created the post" do
+                @another_post.save!
+                expect(user.favorite_for(@another_post)).to be_truthy
+            end
+        end
+
+        describe "#email_user_new_favorite_post" do
+            it "emails user on new post" do
+                @another_post.save!
+                expect { @another_post.send(:email_user_new_favorite_post) }.to change { ActionMailer::Base.deliveries.count }.by(1)
+            end
+        end
     end
-
-    describe "#down_votes" do
-      it "counts the number of down votes for the given post" do
-        expect(post.down_votes).to eq(Vote.where(value: -1, post: post).count)
-      end
-    end
-
-    describe "points" do
-      it "returns the sum of all down and up votes" do
-        up_votes = Vote.where(value: 1, post: post).count
-        down_votes = Vote.where(value: -1, post: post).count
-        expect(post.points).to eq(up_votes - down_votes)
-      end
-    end
-
-    describe "#update_rank" do
-      it "calculates the correct rank" do
-        post.update_rank #calls the method
-        expect(post.rank).to eq (post.points + (post.created_at - Time.new(1970,1,1)) / 1.day.seconds)
-      end
-
-      it "updates the rank when up vote is created" do
-        old_rank = post.rank
-        Vote.create!(value: 1, user: user, post: post)
-        expect(post.rank).to eq(old_rank + 1)
-      end
-
-      it "updates the rank when downvote is created" do
-        old_rank = post.rank
-        Vote.create!(value: -1, user: user, post: post)
-        expect(post.rank).to eq(old_rank - 1)
-      end
-    end
-  end
 end

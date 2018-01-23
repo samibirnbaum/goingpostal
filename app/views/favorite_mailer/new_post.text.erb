@@ -1,0 +1,10 @@
+Dear <%=@user.name%>
+
+Thank you for creating your new post "<%= @post.title %>"
+Great news! Your post has been automatically added to your favorite posts!
+Anytime a user comments on your post you will recieve an email to let you know.
+ 
+Visit online at: <%= topic_post_url(@topic, @post) %>
+
+Regards,
+Bloccit Team
