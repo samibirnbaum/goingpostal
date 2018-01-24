@@ -42,4 +42,9 @@ class User < ApplicationRecord
     def favorite_for(post)
         self.favorites.where(post: post).first
     end
+
+    def avatar_url(size)
+        gravatar_id = Digest::MD5::hexdigest(self.email).downcase #off users email get id
+        "http://gravatar.com/avatar/#{gravatar_id}.png?s=#{size}" #link to image of user with size
+    end
 end

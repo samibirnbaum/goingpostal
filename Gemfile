@@ -49,6 +49,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.0'
   gem 'rails-controller-testing'
   gem 'shoulda' #helpful for model association tests
+  gem 'factory_girl_rails', '~> 4.0' #factories to produce the objects for testing
 end
 
 group :development do

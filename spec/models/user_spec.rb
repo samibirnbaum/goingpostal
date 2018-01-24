@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  let(:user) {User.create!(name: "Samuel", email:"s@gmail.com", password: "password")}
+  let(:user) { create(:user) } #from factory
 
   it { is_expected.to validate_presence_of(:name) }
   it { is_expected.to validate_length_of(:name).is_at_least(1) }
@@ -22,7 +22,7 @@ RSpec.describe User, type: :model do
 
   describe "attributes" do
     it "has the attrs @name @email @password_digest" do
-      expect(user).to have_attributes(name: "Samuel", email:"s@gmail.com")
+      expect(user).to have_attributes(name: user.name, email: user.email)
       expect(user.attributes).to include("password_digest") #cant check for password because it has become a hashed P_D
     end
 
@@ -98,4 +98,13 @@ RSpec.describe User, type: :model do
       expect(user.favorite_for(@post)).to eq(favorite)
     end
   end
+
+    describe ".avatar_url(size)" do # . = class method User.avatar_url
+        let(:known_user) { create(:user, email: "blochead@bloc.io") } #overrides email in factory (need recognised known email for this test)
+        
+        it "returns the proper gravatar for an email registered with gravatar" do
+            expected_gravatar = "http://gravatar.com/avatar/bb6d1172212c180cfbdb7039129d7b03.png?s=48"
+            expect(known_user.avatar_url(48)).to eq(expected_gravatar)
+        end 
+    end
 end
