@@ -3,11 +3,12 @@ include RandomData
 include SessionsHelper
 
 RSpec.describe CommentsController, type: :controller do
-    let(:topic) {Topic.create!(name: RandomData.random_name, description: RandomData.random_paragraph, public: true)}
-    let(:user) {User.create!(name: "Sami B", email: "s@gmail.com", password: "password", role: "member")}
-    let(:my_post) {Post.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph, user: user, topic: topic)}
+    let(:topic) {create(:topic)}
+    let(:user) {create(:user)}
+    let(:other_user) {create(:user)}
+    let(:my_post) {create(:post, user: user)}
     let(:comment) {Comment.create!(body: RandomData.random_paragraph, post: my_post, user: user)}
-    let(:other_user) {User.create!(name: "Mike B", email: "m@gmail.com", password: "password", role: "member")}
+    
 
     context "guest" do
         describe "POST #create" do
@@ -48,7 +49,7 @@ RSpec.describe CommentsController, type: :controller do
 
             it "redirects user to show post" do
                 post :create, params: {post_id: my_post.id, comment: {body: RandomData.random_paragraph}}
-                expect(response).to redirect_to(topic_post_path(topic.id, my_post.id))
+                expect(response).to redirect_to(topic_post_path(my_post.topic.id, my_post.id))
             end
         end
 
@@ -61,7 +62,7 @@ RSpec.describe CommentsController, type: :controller do
 
             it "redirects user" do
                 delete :destroy, params: {post_id: my_post.id, id: comment.id}
-                expect(response).to redirect_to(topic_post_path(topic.id, my_post.id))
+                expect(response).to redirect_to(topic_post_path(my_post.topic.id, my_post.id))
             end
         end
     end
@@ -85,14 +86,14 @@ RSpec.describe CommentsController, type: :controller do
       
             it "redirects to the post show view" do
               post :create, params: {post_id: my_post.id, comment: {body: RandomData.random_sentence}}
-              expect(response).to redirect_to [topic, my_post]
+              expect(response).to redirect_to(topic_post_path(my_post.topic.id, my_post.id))
             end
           end
 
         describe "DELETE #destroy" do
             it "redirects member to same page" do
                 delete :destroy, params: {post_id: my_post.id, id: comment.id}
-                expect(response).to redirect_to(topic_post_path(topic.id, my_post.id))
+                expect(response).to redirect_to(topic_post_path(my_post.topic.id, my_post.id))
             end
         end
     end
@@ -120,7 +121,7 @@ RSpec.describe CommentsController, type: :controller do
 
             it "redirects user to show post" do
                 post :create, params: {post_id: my_post.id, comment: {body: RandomData.random_paragraph}}
-                expect(response).to redirect_to(topic_post_path(topic.id, my_post.id))
+                expect(response).to redirect_to(topic_post_path(my_post.topic.id, my_post.id))
             end
         end
 
@@ -133,7 +134,7 @@ RSpec.describe CommentsController, type: :controller do
 
             it "redirects user" do
                 delete :destroy, params: {post_id: my_post.id, id: comment.id}
-                expect(response).to redirect_to(topic_post_path(topic.id, my_post.id))
+                expect(response).to redirect_to(topic_post_path(my_post.topic.id, my_post.id))
             end
         end
     end

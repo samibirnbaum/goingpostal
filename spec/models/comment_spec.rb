@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Comment, type: :model do
-  let(:user) {User.create!(name: "Samuel", email:"s@gmail.com", password: "password")}
-  let(:topic) {Topic.create!(name: RandomData.random_sentence, description: RandomData.random_paragraph)}
-  let(:post) {topic.posts.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph, user_id: user.id) }
+  let(:user) {create(:user)}
+  let(:topic) {create(:topic)}
+  let(:post) {create(:post) } #automatically associated with user and topic in the post factory
   let(:comment) {Comment.create!(body: "comment body", post: post, user: user)} #post references that post object we just created on line above
 
   it { is_expected.to belong_to(:post) }

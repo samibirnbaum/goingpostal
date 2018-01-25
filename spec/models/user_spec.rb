@@ -72,8 +72,8 @@ RSpec.describe User, type: :model do
 
   #true negative
   describe "invalid user" do
-    let(:user_invalid_name) {User.new(name: "", email: "s@gmail.com", password: "password")}
-    let(:user_invalid_email) {User.new(name: "samuel", email: "", password: "password")}
+    let(:user_invalid_name) {build(:user, name: "")}
+    let(:user_invalid_email) {build(:user, email: "")}
 
     it "should be an invalid user due to blank name" do
       expect(user_invalid_name).to_not be_valid #calls valid? on the object

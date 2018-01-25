@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Post, type: :model do
-  let(:user) {User.create!(name: "Samuel", email:"s@gmail.com", password: "password")}
-  let(:topic) {Topic.create!(name: RandomData.random_sentence, description: RandomData.random_paragraph)} #default public: true
-  let(:post) {Post.create!(title: "my post", body: "the body of my post!", topic_id: topic.id, user_id: user.id)} #creating posts based off the topic object
-
+  let(:topic) { create(:topic) }
+  let(:user) { create(:user) }
+  let(:post) { create(:post) }
+  
   it { is_expected.to belong_to(:topic) }
   it { is_expected.to belong_to(:user) }
   it { is_expected.to have_many(:comments) }
@@ -21,7 +21,7 @@ RSpec.describe Post, type: :model do
   
   describe "attributes" do
     it "has title and body attributes and the topic and user associations" do
-      expect(post).to have_attributes(title: "my post", body: "the body of my post!", topic_id: topic.id, user_id: user.id)
+      expect(post).to have_attributes(title: post.title, body: post.body, user_id: post.user_id, topic_id: post.topic_id)
     end
   end
 

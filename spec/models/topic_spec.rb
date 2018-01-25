@@ -1,20 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe Topic, type: :model do
-  let(:name) {RandomData.random_sentence}
-  let(:description) {RandomData.random_paragraph}
-  let(:public) {true}
-  let(:topic) {Topic.create!(name: name, description: description)}
+  let(:factory_topic) {create(:topic)}
 
   it { is_expected.to have_many(:posts) }
 
   describe "attributes of the model" do
     it "has all the attributes we generated it with" do
-      expect(topic).to have_attributes(name: name, description: description, public: public)
+      expect(factory_topic).to have_attributes(name: factory_topic.name, description: factory_topic.description)
     end
 
     it "creates @public as true by default" do
-      expect(topic.public).to be(true)
+      expect(factory_topic.public).to be(true)
     end
   end
 

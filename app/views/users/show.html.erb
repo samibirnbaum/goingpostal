@@ -1,1 +1,29 @@
-I am the show view for users
+<div class="row">
+    <div class="col-md-8">
+        <div class="media">
+            
+            <br />
+            <%avatar_url= @user.avatar_url(128)%>
+            <% if avatar_url %>
+                <div class="media-left">
+                    <%=image_tag(avatar_url, class: "media-object")%>
+                </div>
+            <% end %>
+
+            <div class="media-body">
+                <h2 class="media-heading"><%=@user.name%></h2>
+                <small>
+                    <%=pluralize(@user.posts.count, "Post")%>
+                    <%=pluralize(@user.comments.count, "Comment")%>
+                </small>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<h2>Posts</h2>
+<%= render @user.posts %>
+ 
+<h2>Comments</h2>
+<%= render @user.comments %>

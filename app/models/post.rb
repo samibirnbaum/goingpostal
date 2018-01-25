@@ -11,6 +11,7 @@ class Post < ApplicationRecord #ApplicationRecord inherits from ActiveRecord::Ba
     has_many :favorites, dependent: :destroy
 
     default_scope { order('rank DESC') }
+    scope :visible_to, -> (user) { user ? all : joins(:topic).where('topics.public' => true) }
 
     validates(:title, presence: true, length: {minimum: 5})
     validates(:body, presence: true, length: {minimum: 20})

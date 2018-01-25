@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
     def new
         @user = User.new
+        @posts = @user.posts.visible_to(current_user)
     end
 
     def create

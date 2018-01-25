@@ -4,7 +4,7 @@ include SessionsHelper
 
 RSpec.describe TopicsController, type: :controller do
 
-    let(:my_topic) {Topic.create!(name: RandomData.random_sentence, description: RandomData.random_paragraph)}
+    let(:factory_my_topic) {create(:topic)}
 
     
     
@@ -23,23 +23,23 @@ RSpec.describe TopicsController, type: :controller do
             
             it "assigns all the topics to @topics" do
                 get :index
-                expect(assigns(:topics)).to eq([my_topic]) #@topics will hold array so will only be eq an array which holds my_topic
+                expect(assigns(:topics)).to eq([factory_my_topic]) #@topics will hold array so will only be eq an array which holds factory_my_topic
             end
         end
 
         describe "GET #show" do
             it "assigns to @topic the topic object whose ID is called in the url" do
-                get :show, params: {id: my_topic.id}
-                expect(assigns(:topic)).to eq(my_topic)
+                get :show, params: {id: factory_my_topic.id}
+                expect(assigns(:topic)).to eq(factory_my_topic)
             end
     
             it "response is an http success" do
-                get :show, params: {id: my_topic.id}
+                get :show, params: {id: factory_my_topic.id}
                 expect(response).to have_http_status(:success)
             end
     
             it "renders specifically the #show view" do
-                get :show, params: {id: my_topic.id}
+                get :show, params: {id: factory_my_topic.id}
                 expect(response).to render_template(:show)
             end
         end
@@ -60,7 +60,7 @@ RSpec.describe TopicsController, type: :controller do
       
         describe "GET edit" do
             it "returns http redirect" do
-                get :edit, params: { id: my_topic.id }
+                get :edit, params: { id: factory_my_topic.id }
                 expect(response).to redirect_to(new_session_path)
             end
         end
@@ -70,14 +70,14 @@ RSpec.describe TopicsController, type: :controller do
                 new_name = RandomData.random_sentence
                 new_description = RandomData.random_paragraph
       
-                put :update, params: { id: my_topic.id, topic: { name: new_name, description: new_description  } }
+                put :update, params: { id: factory_my_topic.id, topic: { name: new_name, description: new_description  } }
                 expect(response).to redirect_to(new_session_path)
             end
         end
       
         describe "DELETE destroy" do
             it "returns http redirect" do
-                delete :destroy, params: { id: my_topic.id }
+                delete :destroy, params: { id: factory_my_topic.id }
                 expect(response).to redirect_to(new_session_path)
             end
         end
@@ -110,23 +110,23 @@ RSpec.describe TopicsController, type: :controller do
             
             it "assigns all the topics to @topics" do
                 get :index
-                expect(assigns(:topics)).to eq([my_topic]) #@topics will hold array so will only be eq an array which holds my_topic
+                expect(assigns(:topics)).to eq([factory_my_topic]) #@topics will hold array so will only be eq an array which holds factory_my_topic
             end
         end
 
         describe "GET #show" do
             it "assigns to @topic the topic object whose ID is called in the url" do
-                get :show, params: {id: my_topic.id}
-                expect(assigns(:topic)).to eq(my_topic)
+                get :show, params: {id: factory_my_topic.id}
+                expect(assigns(:topic)).to eq(factory_my_topic)
             end
     
             it "response is an http success" do
-                get :show, params: {id: my_topic.id}
+                get :show, params: {id: factory_my_topic.id}
                 expect(response).to have_http_status(:success)
             end
     
             it "renders specifically the #show view" do
-                get :show, params: {id: my_topic.id}
+                get :show, params: {id: factory_my_topic.id}
                 expect(response).to render_template(:show)
             end
         end
@@ -147,7 +147,7 @@ RSpec.describe TopicsController, type: :controller do
       
         describe "GET edit" do
             it "returns http redirect" do
-                get :edit, params: { id: my_topic.id }
+                get :edit, params: { id: factory_my_topic.id }
                 expect(response).to redirect_to(topics_path)
             end
         end
@@ -157,14 +157,14 @@ RSpec.describe TopicsController, type: :controller do
                 new_name = RandomData.random_sentence
                 new_description = RandomData.random_paragraph
       
-                put :update, params: { id: my_topic.id, topic: { name: new_name, description: new_description } }
+                put :update, params: { id: factory_my_topic.id, topic: { name: new_name, description: new_description } }
                 expect(response).to redirect_to(topics_path)
             end
         end
       
         describe "DELETE destroy" do
             it "returns http redirect" do
-                delete :destroy, params: { id: my_topic.id }
+                delete :destroy, params: { id: factory_my_topic.id }
                 expect(response).to redirect_to(topics_path)
             end
         end
@@ -199,23 +199,23 @@ RSpec.describe TopicsController, type: :controller do
             
             it "assigns all the topics to @topics" do
                 get :index
-                expect(assigns(:topics)).to eq([my_topic]) #@topics will hold array so will only be eq an array which holds my_topic
+                expect(assigns(:topics)).to eq([factory_my_topic]) #@topics will hold array so will only be eq an array which holds factory_my_topic
             end
         end
 
         describe "GET #show" do
             it "assigns to @topic the topic object whose ID is called in the url" do
-                get :show, params: {id: my_topic.id}
-                expect(assigns(:topic)).to eq(my_topic)
+                get :show, params: {id: factory_my_topic.id}
+                expect(assigns(:topic)).to eq(factory_my_topic)
             end
     
             it "response is an http success" do
-                get :show, params: {id: my_topic.id}
+                get :show, params: {id: factory_my_topic.id}
                 expect(response).to have_http_status(:success)
             end
     
             it "renders specifically the #show view" do
-                get :show, params: {id: my_topic.id}
+                get :show, params: {id: factory_my_topic.id}
                 expect(response).to render_template(:show)
             end
         end
@@ -257,46 +257,46 @@ RSpec.describe TopicsController, type: :controller do
     
         describe "GET #edit" do
             it "assigns to @topic the topic object whose ID is in the url" do
-                get :edit, params: {id: my_topic.id}
-                expect(assigns(:topic).name).to eq(my_topic.name)
-                expect(assigns(:topic).description).to eq(my_topic.description)
-                expect(assigns(:topic).public).to eq(my_topic.public)
+                get :edit, params: {id: factory_my_topic.id}
+                expect(assigns(:topic).name).to eq(factory_my_topic.name)
+                expect(assigns(:topic).description).to eq(factory_my_topic.description)
+                expect(assigns(:topic).public).to eq(factory_my_topic.public)
             end
     
             it "returns an http status success" do
-                get :edit, params: {id: my_topic.id}
+                get :edit, params: {id: factory_my_topic.id}
                 expect(response).to have_http_status(:success)
             end
     
             it "specifically respons with the #edit view" do
-                get :edit, params: {id: my_topic.id}
+                get :edit, params: {id: factory_my_topic.id}
                 expect(response).to render_template(:edit)
             end
         end
     
         describe "PUT #update" do
             it "assigns to @topic the topic with url ID to be updated" do
-                put :update, params: {id: my_topic.id, topic: {name: "updated name", description: "updated desc", public: false}}
-                expect(assigns(:topic).id).to eq(my_topic.id)
+                put :update, params: {id: factory_my_topic.id, topic: {name: "updated name", description: "updated desc", public: false}}
+                expect(assigns(:topic).id).to eq(factory_my_topic.id)
                 expect(assigns(:topic).name).to eq("updated name")
                 expect(assigns(:topic).description).to eq("updated desc")
                 expect(assigns(:topic).public).to eq(false)
             end
     
             it "shows the newly updated topic in the #show view" do
-                put :update, params: {id: my_topic.id, topic: {name: "updated name", description: "updated desc", public: false}}
-                expect(response).to redirect_to(topic_path(my_topic.id))
+                put :update, params: {id: factory_my_topic.id, topic: {name: "updated name", description: "updated desc", public: false}}
+                expect(response).to redirect_to(topic_path(factory_my_topic.id))
             end
         end
     
         describe "DELETE #destroy" do
             it "deletes the topic object based on the id received in the url" do
-                delete :destroy, params: {id: my_topic.id}
-                expect(Topic.where(id: my_topic.id)).to eq([])
+                delete :destroy, params: {id: factory_my_topic.id}
+                expect(Topic.where(id: factory_my_topic.id)).to eq([])
             end
             
             it "redirects user back to the home page for topics" do
-                delete :destroy, params: {id: my_topic.id}
+                delete :destroy, params: {id: factory_my_topic.id}
                 expect(response).to redirect_to(topics_path)
             end
         end
