@@ -7,7 +7,7 @@ RSpec.describe CommentsController, type: :controller do
     let(:user) {create(:user)}
     let(:other_user) {create(:user)}
     let(:my_post) {create(:post, user: user)}
-    let(:comment) {Comment.create!(body: RandomData.random_paragraph, post: my_post, user: user)}
+    let(:comment) {create(:comment, post: my_post, user: user)}
     
 
     context "guest" do

@@ -4,7 +4,7 @@ RSpec.describe Comment, type: :model do
   let(:user) {create(:user)}
   let(:topic) {create(:topic)}
   let(:post) {create(:post) } #automatically associated with user and topic in the post factory
-  let(:comment) {Comment.create!(body: "comment body", post: post, user: user)} #post references that post object we just created on line above
+  let(:comment) {create(:comment, post: post, user: user)} #post references that post object we just created on line above
 
   it { is_expected.to belong_to(:post) }
   it { is_expected.to belong_to(:user) }
@@ -15,13 +15,13 @@ RSpec.describe Comment, type: :model do
   
   describe "attributes" do
     it "has body attribute" do
-      expect(comment).to have_attributes(body: "comment body")
+      expect(comment).to have_attributes(body: comment.body)
     end
   end
 
   describe "after_create" do
     before do
-      @another_comment = Comment.new(body: 'Comment Body', post: post, user: user)
+      @another_comment = build(:comment, post: post, user: user)
     end
     
     it "sends an email to users who have favorited the post" do

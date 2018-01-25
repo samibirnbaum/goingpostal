@@ -107,4 +107,26 @@ RSpec.describe User, type: :model do
             expect(known_user.avatar_url(48)).to eq(expected_gravatar)
         end 
     end
+
+    describe "#comments?" do
+        it "returns true if the given user has a comment" do
+            create(:comment, user: user)
+            expect(user.comments?).to be_truthy
+        end
+
+        it "returns false if the given user does not have a comment" do
+            expect(user.comments?).to be_falsey
+        end
+    end
+
+    describe "#posts?" do
+        it "returns true if the given user has a post" do
+            create(:post, user: user)
+            expect(user.posts?).to be_truthy
+        end
+
+        it "returns false if the given user does not have a post" do
+            expect(user.posts?).to be_falsey
+        end
+    end
 end
