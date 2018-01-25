@@ -146,14 +146,14 @@ RSpec.describe PostsController, type: :controller do
 
     describe "PUT #update" do
       it "updates @post variable with new attributes" do
-        put :update, params: {topic_id: my_topic.id, id: my_post.id, post: {title: "updated title", body: "updated body"}}
+        put :update, params: {topic_id: my_topic.id, id: my_post.id, post: {title: "updated title", body: "updated bodyaaaaaaaaaa"}}
         expect(assigns(:post).id).to eq(my_post.id)
         expect(assigns(:post).title).to eq("updated title")
-        expect(assigns(:post).body).to eq("updated body")
+        expect(assigns(:post).body).to eq("updated bodyaaaaaaaaaa")
       end
 
       it "on successflul save shows the updated post in the #show view" do
-        put :update, params: {topic_id: my_topic.id, id: my_post.id, post: {title: "updated title", body: "updated body"}}
+        put :update, params: {topic_id: my_topic.id, id: my_post.id, post: {title: "updated title", body: "updated bodyaaaaaaaaaa"}}
         expect(response).to redirect_to(topic_post_path(my_topic.id, my_post.id))
       end
     end
@@ -333,7 +333,7 @@ RSpec.describe PostsController, type: :controller do
       end
 
       it "on successflul save shows the updated post in the #show view" do
-        put :update, params: {topic_id: my_topic.id, id: my_post.id, post: {title: "updated title", body: "updated body"}}
+        put :update, params: {topic_id: my_topic.id, id: my_post.id, post: {title: "updated title", body: "updated bodyaaaaaaaaaa"}}
         expect(response).to redirect_to(topic_post_path(my_topic.id, my_post.id))
       end
     end
