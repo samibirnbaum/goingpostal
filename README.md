@@ -1,7 +1,17 @@
-## Bloccit: a Reddit replica to teach the fundamentals of web development and Rails.
- 
- Made with my mentor at [Bloc](http://bloc.io).
+# Bloccit
 
- If you clone this repo, use `bundle install` to get all gems 
+A Reddit type application using Ruby on Rails where people can post, vote, favourite and comment.
 
-    
+![Snapshot](app/assets/images/snapshot.png)
+
+[Visit Site](https://polar-brushlands-91836.herokuapp.com/)
+
+[Case Study](https://samibirnbaum.com/portfolio/bloccit.html)
+
+## Usage
+
+1. Fork and clone the repo: `git clone https://github.com/samibirnbaum/bloccit.git`
+2. You must have Ruby installed
+3. Run `$ bundle install` to download/install the needed dependencies
+4. Start the local server: `$ rails s`.
+5. Open a web browser and go to `http://localhost:3000`.
