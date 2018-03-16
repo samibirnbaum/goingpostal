@@ -93,7 +93,7 @@ RSpec.describe TopicsController, type: :controller do
     
     context "member" do
         before do
-            user = User.create!(name: "Bloccit User", email: "user@bloccit.com", password: "helloworld", role: :member) #we create a user - sign up
+            user = User.create!(name: "Going Postal User", email: "user@goingpostal.com", password: "helloworld", role: :member) #we create a user - sign up
             create_session(user) #sign that user in 
         end
         
@@ -182,7 +182,7 @@ RSpec.describe TopicsController, type: :controller do
     
     context "admin" do
         before do
-            user = User.create!(name: "Bloccit User", email: "user@bloccit.com", password: "helloworld", role: :admin)
+            user = User.create!(name: "Going Postal User", email: "user@goingpostal.com", password: "helloworld", role: :admin)
             create_session(user)
         end
         
